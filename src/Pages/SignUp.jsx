@@ -1,16 +1,21 @@
 import React, { useState } from 'react';
 
-import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+import { getAuth, createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
+import { doc, serverTimestamp, setDoc } from 'firebase/firestore';
+import { toast } from 'react-toastify';
 
 import { db } from '../firebase';
 
 import { AiFillEye, AiFillEyeInvisible } from 'react-icons/ai';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import OAuth from '../components/OAuth';
 
-
+import 'react-toastify/dist/ReactToastify.css';
 
 const SignUp = () => {
+
+  const navigate=useNavigate();
+
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -31,22 +36,50 @@ const SignUp = () => {
     ))
   }
 
-  function onSubmit(e) {
+  async function onSubmit(e) {
     e.preventDefault();
     try {
       const auth = getAuth();
-      createUserWithEmailAndPassword(auth, formData.email, formData.password)
-        .then((userCredential) => {
-          const user = userCredential.user;
-          console.log(user);
-        })
-        .catch((error) => {
-          const errorCode = error.code;
-          const errorMessage = error.message;
-          console.log(errorCode,errorMessage);
+      const userCredential = await createUserWithEmailAndPassword(auth, formData.email, formData.password)
+      const user = userCredential.user;
+      console.log(user);
+      // if(user){
+      //   console.log("jii");
+      //   updateProfile(auth.currentUser, {
+      //     displayName: formData.name
+      //   });
+  
+      //   const formDataCopy = { ...formData };
+      //   delete formDataCopy.password;
+      //   formDataCopy.timestamp = serverTimestamp();
+  
+      //   await setDoc(doc(db, "users", user.uid), formDataCopy);
+
+      //   navigate('/');
+      // }
+      toast.success('Registration successful!', {
+        position: "bottom-center",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
         });
+      navigate('/')
     } catch (error) {
-      console.log(error);
+      toast.error('Something wrong with registration!', {
+        position: "bottom-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+        });
+        
     }
   }
 
