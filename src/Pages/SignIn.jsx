@@ -1,10 +1,14 @@
 import React, { useState } from 'react';
 
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+
 import { AiFillEye, AiFillEyeInvisible } from 'react-icons/ai';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import OAuth from '../components/OAuth';
 
 const SignIn = () => {
+  const navigate=useNavigate();
   const [formData, setFormData] = useState({
     email: "",
     password: ""
@@ -22,6 +26,21 @@ const SignIn = () => {
     setShowPassword(prevState => (
       !prevState
     ))
+  };
+
+  const onSubmit=(e)=>{
+    e.preventDefault();
+
+    const auth = getAuth();
+    try {
+      const userCredential=signInWithEmailAndPassword(auth,formData.email,formData.password);
+      if(userCredential){
+        console.log(userCredential);
+        navigate("/")
+      }
+    } catch (error) {
+      toast.error("Bad user credentials");
+    }
   }
 
   return (
@@ -71,7 +90,7 @@ const SignIn = () => {
               </p>
             </div>
             <div className='mt-6 w-full bg-blue-600 p-3 rounded text-sm font-semibold hover:bg-blue-700 active:bg-blue-800'>
-              <button className='text-white uppercase' >signup</button>
+              <button className='text-white uppercase' onClick={onSubmit}>signin</button>
             </div>
             <div className='my-4 flex items-center before:border-t before:flex-1 border-gray-300 after:border-t after:flex-1 border-gray-300'>
               <p className='mx-2'>OR</p>
