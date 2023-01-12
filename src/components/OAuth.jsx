@@ -25,23 +25,32 @@ const OAuth = () => {
             const token = credential.accessToken;
             const user = result.user;
 
-            const docRef=doc(db,"users",user.uid);
-            const docSnap=await getDoc(docRef);
+            const docRef = doc(db, "users", user.uid);
+            const docSnap = await getDoc(docRef);
 
-            if(!docSnap.exists()){
-                setDoc(docRef,{
-                    name:user.displayName,
-                    email:user.email,
-                    timestamp:serverTimestamp()
+            if (!docSnap.exists()) {
+                setDoc(docRef, {
+                    name: user.displayName,
+                    email: user.email,
+                    timestamp: serverTimestamp()
                 });
             };
-            
+
             if (user) {
                 navigate("/")
             };
-            
+
         } catch (error) {
-            toast.error("can't authenticate with google.");
+            toast.error("can't authenticate with google.", {
+                position: "bottom-center",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "dark",
+            });
             console.log(error);
         }
     }
@@ -50,7 +59,7 @@ const OAuth = () => {
         <div className='w-full rounded bg-red-600 py-3 flex  justify-center hover:bg-red-700 active:bg-red-800 transition ease-in-out duration-150'
             onClick={onGoogleClick}
         >
-            <button type='button' className=' uppercase text-sm text-white font-semibold flex items-center'>
+            <button type='button' className='w-full uppercase text-sm text-white font-semibold flex items-center justify-center'>
                 <FcGoogle className='bg-white rounded-full h-6 w-6 mr-2' />
                 continue with google
             </button>

@@ -39,7 +39,16 @@ const SignIn = () => {
         navigate("/")
       }
     } catch (error) {
-      toast.error("Bad user credentials");
+      toast.error("Bad user credentials",{
+        position: "bottom-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+        });
     }
   }
 
@@ -54,7 +63,7 @@ const SignIn = () => {
           />
         </div>
         <div className='w-full md:w-[67%] lg:w-[40%] lg:ml-8'>
-          <form className=''>
+          <form onSubmit={onSubmit}>
             <input
               type="email"
               name="email"
@@ -90,7 +99,7 @@ const SignIn = () => {
               </p>
             </div>
             <div className='mt-6 w-full bg-blue-600 p-3 rounded text-sm font-semibold hover:bg-blue-700 active:bg-blue-800'>
-              <button className='text-white uppercase' onClick={onSubmit}>signin</button>
+              <button className='w-full text-white uppercase'>signin</button>
             </div>
             <div className='my-4 flex items-center before:border-t before:flex-1 border-gray-300 after:border-t after:flex-1 border-gray-300'>
               <p className='mx-2'>OR</p>

@@ -94,7 +94,7 @@ const SignUp = () => {
           />
         </div>
         <div className='w-full md:w-[67%] lg:w-[40%] lg:ml-8'>
-          <form className=''>
+          <form onSubmit={onSubmit}>
             <input
               type="text"
               name="name"
@@ -137,8 +137,8 @@ const SignUp = () => {
                 <Link to='/forget' className='text-blue-600 hover:text-blue-800 transition ease-in-out'>Forgot Password?</Link>
               </p>
             </div>
-            <div className='mt-6 w-full bg-blue-600 p-3 rounded text-sm font-semibold hover:bg-blue-700 active:bg-blue-800' onClick={onSubmit}>
-              <button className='text-white uppercase' >signup</button>
+            <div className='mt-6 w-full bg-blue-600 p-3 rounded text-sm font-semibold hover:bg-blue-700 active:bg-blue-800'>
+              <button className='w-full text-white uppercase' >signup</button>
             </div>
             <div className='my-3 flex items-center before:border-t before:flex-1 border-gray-300 after:border-t after:flex-1 border-gray-300'>
               <p className='mx-2'>OR</p>

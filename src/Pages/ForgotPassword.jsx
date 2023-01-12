@@ -1,7 +1,8 @@
+import { getAuth, sendPasswordResetEmail } from 'firebase/auth';
 import React, { useState } from 'react';
 
-import { AiFillEye, AiFillEyeInvisible } from 'react-icons/ai';
 import { Link } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import OAuth from '../components/OAuth';
 
 const ForgotPassword = () => {
@@ -9,8 +10,38 @@ const ForgotPassword = () => {
 
   const handleChange = (e) => {
     setEmail(e.target.value);
-  }
+  };
 
+  const onSubmit=async (e)=>{
+    e.preventDefault();
+
+    const auth=getAuth();
+    try {
+      const result= await sendPasswordResetEmail(auth,email);
+      toast.success("Reset email send successfully..",{
+        position: "bottom-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+        });
+    } catch (error) {
+      toast.error("Problem with sending reset email",{
+        position: "bottom-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+        });
+      console.log(error);
+    }
+  }
 
   return (
     <section>
@@ -23,7 +54,7 @@ const ForgotPassword = () => {
           />
         </div>
         <div className='w-full md:w-[67%] lg:w-[40%] lg:ml-8'>
-          <form className=''>
+          <form onSubmit={onSubmit}>
             <input
               type="email"
               name="email"
@@ -41,7 +72,7 @@ const ForgotPassword = () => {
               </p>
             </div>
             <div className='mt-6 w-full bg-blue-600 p-3 rounded text-sm font-semibold hover:bg-blue-700 active:bg-blue-800'>
-              <button className='text-white uppercase' >send reset password</button>
+              <button className='w-full text-white uppercase' >send reset password</button>
             </div>
             <div className='my-4 flex items-center before:border-t before:flex-1 border-gray-300 after:border-t after:flex-1 border-gray-300'>
               <p className='mx-2'>OR</p>
