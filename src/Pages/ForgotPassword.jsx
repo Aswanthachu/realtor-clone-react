@@ -62,6 +62,7 @@ const ForgotPassword = () => {
               onChange={handleChange}
               className='w-full px-4 py-2 text-xl rounded text-gray-700 bg-white border-gray-300 transition ease-in-out mb-6'
               placeholder='Email Address'
+              required
             />
             <div className='flex justify-between pt-2 whitespace-nowrap text-sm sm:text-lg'>
               <p>Don't have a account?

@@ -8,9 +8,6 @@ import { useNavigate } from 'react-router-dom';
 import { doc, getDoc, serverTimestamp, setDoc } from 'firebase/firestore';
 import { db } from '../firebase';
 
-
-
-
 const OAuth = () => {
 
     const navigate = useNavigate();

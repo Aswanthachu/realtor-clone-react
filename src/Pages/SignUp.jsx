@@ -43,20 +43,21 @@ const SignUp = () => {
       const userCredential = await createUserWithEmailAndPassword(auth, formData.email, formData.password)
       const user = userCredential.user;
       console.log(user);
-      // if(user){
-      //   console.log("jii");
-      //   updateProfile(auth.currentUser, {
-      //     displayName: formData.name
-      //   });
-  
-      //   const formDataCopy = { ...formData };
-      //   delete formDataCopy.password;
-      //   formDataCopy.timestamp = serverTimestamp();
-  
-      //   await setDoc(doc(db, "users", user.uid), formDataCopy);
+      if(user){
+        // console.log("jii");
+        updateProfile(auth.currentUser, {
+          displayName: formData.name
+        });
 
-      //   navigate('/');
-      // }
+        const formDataCopy = { ...formData };
+        delete formDataCopy.password;
+        console.log(formDataCopy);
+        formDataCopy.timestamp = serverTimestamp();
+  
+        await setDoc(doc(db, "users", user.uid), formDataCopy);
+
+        navigate('/');
+      }
       toast.success('Registration successful!', {
         position: "bottom-center",
         autoClose: 2000,
@@ -102,6 +103,7 @@ const SignUp = () => {
               onChange={handleChange}
               className='w-full px-4 py-2 text-xl rounded text-gray-700 bg-white border-gray-300 transition ease-in-out mb-6'
               placeholder='Name'
+              required
             />
             <input
               type="email"
@@ -110,6 +112,7 @@ const SignUp = () => {
               onChange={handleChange}
               className='w-full px-4 py-2 text-xl rounded text-gray-700 bg-white border-gray-300 transition ease-in-out mb-6'
               placeholder='Email Address'
+              required
             />
             <div className='relative'>
               <input
@@ -119,6 +122,7 @@ const SignUp = () => {
                 onChange={handleChange}
                 className='w-full px-4 py-2 text-xl rounded text-gray-700 bg-white border-gray-300 transition ease-in-out'
                 placeholder='Password'
+                required
               />
               {showPassword ? <AiFillEye
                 className='absolute right-3 top-3 text-xl'

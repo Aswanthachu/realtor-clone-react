@@ -8,7 +8,7 @@ import { toast } from 'react-toastify';
 import OAuth from '../components/OAuth';
 
 const SignIn = () => {
-  const navigate=useNavigate();
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     email: "",
     password: ""
@@ -28,18 +28,43 @@ const SignIn = () => {
     ))
   };
 
-  const onSubmit=(e)=>{
+  const onSubmit = (e) => {
     e.preventDefault();
 
     const auth = getAuth();
+    const { email, password } = formData;
     try {
-      const userCredential=signInWithEmailAndPassword(auth,formData.email,formData.password);
-      if(userCredential){
-        console.log(userCredential);
+      // if (email === "" && password === "") {
+      //   toast.error("Please fill valid email and password");
+      // }
+      // else if (email === "" && password !== "") {
+      //   toast.error("Please fill valid email");
+      // }
+      // else if (email !== "" && password === "") {
+      //   toast.error("Please enter password");
+      // } else {
+      const userCredential = signInWithEmailAndPassword(auth, email, password);
+      console.log(userCredential.user);
+
+      if (userCredential.user) {
         navigate("/")
+      } else {
+        toast.error("Bad user credentials", {
+          position: "bottom-center",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+        });
       }
-    } catch (error) {
-      toast.error("Bad user credentials",{
+      // }
+    }
+
+    catch (error) {
+      toast.error("Bad user credentials", {
         position: "bottom-center",
         autoClose: 5000,
         hideProgressBar: false,
@@ -48,7 +73,7 @@ const SignIn = () => {
         draggable: true,
         progress: undefined,
         theme: "dark",
-        });
+      });
     }
   }
 
@@ -71,6 +96,7 @@ const SignIn = () => {
               onChange={handleChange}
               className='w-full px-4 py-2 text-xl rounded text-gray-700 bg-white border-gray-300 transition ease-in-out mb-6'
               placeholder='Email Address'
+              required
             />
             <div className='relative'>
               <input
@@ -80,6 +106,7 @@ const SignIn = () => {
                 onChange={handleChange}
                 className='w-full px-3 py-2 text-xl rounded text-gray-700 bg-white border-gray-300 transition ease-in-out'
                 placeholder='Password'
+                required
               />
               {showPassword ? <AiFillEye
                 className='absolute right-3 top-3 text-xl'
