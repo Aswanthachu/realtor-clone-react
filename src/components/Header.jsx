@@ -48,7 +48,7 @@ const Header = () => {
                         >Offers
                         </li>
                         <li className={`text-sm font-semibold py-4 text-gray-400 border-b-[3px] border-b-transparent ${(pathMatchRoute('/signin') || pathMatchRoute('/profile'))&& "text-black border-b-red-600"} cursor-pointer`}
-                            onClick={() => navigate('/signin')}
+                            onClick={() => navigate(`${pageState ==="signin" ? "/signin" : "/profile"}`)}
                         >
                             {pageState}
                         </li>
