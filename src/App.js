@@ -12,6 +12,8 @@ import ForgotPassword from './Pages/ForgotPassword';
 import Header from './components/Header';
 import PrivateRoute from './components/PrivateRoute';
 import CreateListings from './Pages/CreateListings';
+import Listing from './Pages/Listing';
+import Category from './Pages/Category';
 
 function App() {
   return (
@@ -28,9 +30,25 @@ function App() {
             <Route path='/offers' element={<Offers />} />
             <Route path='/signup' element={<SignUp />} />
             <Route path='/forget' element={<ForgotPassword />} />
-            <Route path='/create-listing' element={<PrivateRoute />}>
+            {/* <Route path='/create-listing' element={<PrivateRoute />}>
               <Route path='/create-listing' element={<CreateListings />} />
-            </Route>
+            </Route> */}
+
+           {/* dd */}
+
+           <Route
+            path="/category/:categoryName/:listingId"
+            element={<Listing />}
+          />
+          <Route path="/offers" element={<Offers />} />
+          <Route path="/category/:categoryName" element={<Category />} />
+          <Route path="create-listing" element={<PrivateRoute />}>
+            <Route path="/create-listing" element={<CreateListings />} />
+          </Route>
+          {/* <Route path="edit-listing" element={<PrivateRoute />}>
+            <Route path="/edit-listing/:listingId" element={<EditListing />} />
+          </Route> */}
+
           </Routes>
           <ToastContainer
             position="top-right"
